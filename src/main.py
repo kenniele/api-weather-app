@@ -1,6 +1,6 @@
 from fastapi import FastAPI, applications
 from fastapi.openapi.docs import get_swagger_ui_html
-from starlette.staticfiles import StaticFiles
+from fastapi.staticfiles import StaticFiles
 
 import uvicorn
 
@@ -22,10 +22,5 @@ app.include_router(router_weather)
 
 app.mount("/static", StaticFiles(directory="../static/"), name="static")
 
-origins = [
-    "http://localhost",
-    "http://127.0.0.1"
-]
-
 if __name__ == "__main__":
-    uvicorn.run("main:app", port=8000, host="127.0.0.1", reload=True)
+    uvicorn.run("main:app", port=8000, host="127.0.0.1", forwarded_allow_ips="::1", reload=True)

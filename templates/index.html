@@ -8,22 +8,31 @@
 </head>
 <body>
 <div class="container">
-    <h1 class="title">API Weather App</h1>
+    <h1 class="title"><a href="/">API Weather App</a></h1>
+    {% if last %}
+        <div class="last-request">
+            Последний запрос: <span class="last-city"><a href="/{{ last }}">{{ last }}</a></span>
+        </div>
+    {% elif last=="" %}
+        <div class="last-request">
+            Это ваш первый запрос!
+        </div>
+    {% endif %}
     <div class="form">
         <form onsubmit="submitForm(event)">
-            <input class="btn" id="city" type="text" name="city" placeholder="Название города" value="{{ city }}">
+            <input class="btn" id="city" type="text" name="city" placeholder="Название города" value="{{ city }}" oninput="fetchCities()">
             <input class="btn submit" type="submit" value="Получить погоду">
         </form>
         {% if data %}
             {% if transl %}
-            <div class="result">
-                <div>Адрес: {{city}}</div>
-                <ul>
-                    {% for k, v in transl.items() %}
-                        <li>{{k}}: {{v}}</li>
-                    {% endfor %}
-                </ul>
-            </div>
+                <div class="result">
+                    <ul>
+                        <li><span class="li-key">Адрес</span>: <span class="li-val">{{ city }}</span></li>
+                        {% for k, v in transl.items() %}
+                            <li><span class="li-key">{{ k }}</span>: <span class="li-val">{{ v }}</span></li>
+                        {% endfor %}
+                    </ul>
+                </div>
             {% endif %}
         {% else %}
             <div class="no-city">Такого города нет</div>

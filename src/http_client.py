@@ -13,5 +13,4 @@ class WeatherHTTPClient:
                 longitude=longitude,
                 current_weather=True,
             )
-            print(forecast.to_json())
             return forecast.to_dict()
